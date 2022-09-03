@@ -17,6 +17,8 @@ class BebidasController extends Controller
 
     public function getByCategory(){
 
+        $all = Bebidas::with('getCategory')->orderBy('price', 'ASC')->get();
+
         $bebidaEnergetica = Categoria::
         join('product', 'product.category', '=', 'category.id')
         ->where('category.id', '=', 1)
@@ -60,6 +62,7 @@ class BebidasController extends Controller
        ->get();
 
          return response()->json([
+            'Todos' => $all,
             'bebidaEnergetica' => $bebidaEnergetica,
             'pisco' => $pisco,
             'ron' => $ron,
@@ -117,9 +120,11 @@ class BebidasController extends Controller
         return $productos;
         //Esta función devolverá los datos de los productos ordenados.
     }
-    
+
     public function search(Request $request){
-        $bebida = Bebidas::where('name',$request)->get();
+        $buscar=$request->input('wordSearch');
+        $bebida = Bebidas::
+        where('name','LIKE', '%' . $buscar . '%')->get();
         return $bebida;
         //Esta función devolverá los datos de los productos buscados.
     }
