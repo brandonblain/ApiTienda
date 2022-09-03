@@ -70,10 +70,59 @@ class BebidasController extends Controller
             //Esta función nos devolvera todos los productos con su categoria ligadas que tenemos en nuestra BD.
     }
 
+    public function order(Request $request){
+        $ordenados=$request->input('order');
+        $orden='';
+        $prductoAtri='';
+        $prductoTods='';
+        switch ($request->input('order')) {
+            case 'NAZ':
+                $orden='ASC';
+                $prductoAtri='product.name';
+                $prductoTods='name';
+                break;
+            case 'NZA':
+                $orden='DESC';
+                $prductoAtri='product.name';
+                $prductoTods='name';
+                break;
+            case 'PMY':
+                $orden='DESC';
+                $prductoAtri='product.price';
+                $prductoTods='price';
+                break;
+            case 'PM':
+                $orden='ASC';
+                $prductoAtri='product.price';
+                $prductoTods='price';
+                break;
+            case 'DM':
+                $orden='DESC';
+                $prductoAtri='product.discount';
+                $prductoTods='discount';
+                break;
+            default:
+                break;
+        }    
+        $tipoProducto=$request->input('producto');
+        if ($tipoProducto=='Todos') {
+            $productos = Bebidas::with('getCategory')->orderBy($prductoTods, $orden)->get();
+        }else{
+            $productos = Categoria::
+            join('product', 'product.category', '=', 'category.id')
+            ->where('category.name', '=', $tipoProducto)
+            ->orderBy($prductoAtri,$orden)
+            ->get();
+        }
+        return $productos;
+        //Esta función devolverá los datos de los productos ordenados.
+    }
+    
     public function search(Request $request){
         $bebida = Bebidas::where('name',$request)->get();
         return $bebida;
         //Esta función devolverá los datos de los productos buscados.
     }
+
 
 }

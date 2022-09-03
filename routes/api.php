@@ -20,6 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/Allbebidas', 'App\Http\Controllers\BebidasController@getAllProducts');   //Retorna todos los productos
 Route::get('/getByCategory', 'App\Http\Controllers\BebidasController@getByCategory'); //Retorna los productos por categoria
+Route::post('/bebidas/Order', 'App\Http\Controllers\BebidasController@order'); //Retorna los productos acomodados por mayor o menor precio o por nombre Asc o Desc, o Descuento Mayor
 Route::get('/bebidas/buscar', 'App\Http\Controllers\BebidasController@search');       //Retorna los productos buscados por nombre
-Route::get('/bebidas/Order', 'App\Http\Controllers\BebidasController@order');         //Retorna los productos acomodados por mayor o menor precio o por nombre Asc o Desc, o Descuento Mayor
 
