@@ -1,64 +1,171 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# API Tienda en linea
 
-## About Laravel
+API tienda de Bsale es una api la cual te ayuda a obtener los datos de los productos que se encuentran en la base de datos de Bsale.
+Asi como tambien traer filtrado por categoria, hacer una busqueda de producto, asi como tambien ordenar los productos.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Esta api se comunica con una base de datos externa la cual se conecta con el api para ser consumida por el cliente.
+La conexión se hace por medio del framework de lavarel el cual se comunica de la siguiente dirección:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+mdb-test.c6vunyturrl6.us-west-1.rds.amazonaws.com
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+La cual es necesaria una serie de parametros para hacer uso de esta base de datos.
+Son los siguientes:
 
-## Learning Laravel
+Motor: MySQL
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+● Host: mdb-test.c6vunyturrl6.us-west-1.rds.amazonaws.com  
+● Usuario: bsale_test  
+● Contraseña: bsale_test  
+● Nombre db: bsale_test
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+El consumo de la API de Bsale Tienda puede ser consumida del siguiente link:  
+https://api-tienda-l7nar1kcp-brandonblain.vercel.app/api
 
-## Laravel Sponsors
+Ejemplo:  
+https://api-tienda-l7nar1kcp-brandonblain.vercel.app/api/api/AllBebidas
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Para hacer uso del endpoint de Get all Productos.  
+Retornar todos los productos.
 
-### Premium Partners
+Para hacer uso del siguiente link es necesario hacer uso de los endpoint correspondientes, en los pasos siguientes:
+## API Referencias
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+### Get all Productos
 
-## Contributing
+Retorna todos los productos de la base de datos.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```http
+  GET /api/AllBebidas
+```
 
-## Code of Conduct
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+|  | | No requiere parametros |
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Ejemplo de respuesta:
 
-## Security Vulnerabilities
+```http
+[  
+    {
+        "id": 53,  
+        "name": "Mani Sin Sal",  
+        "url_image": "https://dojiw2m9tvv09.cloudfront.net/11132/product/manisinsalmp6988.jpg",  
+        "price": 500,  
+        "discount": 0,  
+        "category": 5,  
+        "get_category": {  
+            "id": 5,  
+            "name": "snack"  
+        }  
+    }  
+]
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Get by Category
 
-## License
+Retorna los productos por categoria de producto.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```http
+  GET /api/getByCategory
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+|      | | No requiere parametros |
+
+Ejemplo de respuesta:
+
+```http
+  {
+    "Todos": [
+        {
+            "id": 53,
+            "name": "Mani Sin Sal",
+            "url_image": "https://dojiw2m9tvv09.cloudfront.net/11132/product/manisinsalmp6988.jpg",
+            "price": 500,
+            "discount": 0,
+            "category": 5,
+            "get_category": {
+                "id": 5,
+                "name": "snack"
+            }
+        }
+    ],
+    "bebidaEnergetica": [
+        {
+            "id": 35,
+            "name": "ENERGETICA MAKKA DRINKS",
+            "url_image": "https://dojiw2m9tvv09.cloudfront.net/11132/product/makka-drinks-250ml0455.jpg",
+            "price": 1190,
+            "discount": 0,
+            "category": 1
+        },
+    ]    
+  }      
+```
+
+### Get by Category
+
+Retorna los productos buscados por nombre o parte del nombre.
+
+```http
+  POST /api/bebidas/buscar
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+|  `wordSearch` | `string` | Producto a buscar |
+
+Ejemplo de respuesta:
+
+```http
+  [  
+    {
+        "id": 53,  
+        "name": "Mani Sin Sal",  
+        "url_image": "https://dojiw2m9tvv09.cloudfront.net/11132/product/manisinsalmp6988.jpg",  
+        "price": 500,  
+        "discount": 0,  
+        "category": 5,  
+    }  
+]
+```
+
+### Get by Category
+
+Retorna los productos acomodados por mayor o menor precio o por nombre Asc o Desc, o Descuento Mayor.
+
+```http
+  POST /api/bebidas/Order
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+|   `order` | `string` | Tipo de ordenamiento |
+|   `producto` | `string` | Categoria de producto a ordenar |
+
+Ejemplo de respuesta:
+
+```http
+[
+    {
+            "id": 35,
+            "name": "ENERGETICA MAKKA DRINKS",
+            "url_image": "https://dojiw2m9tvv09.cloudfront.net/11132/product/makka-drinks-250ml0455.jpg",
+            "price": 1190,
+            "discount": 0,
+            "category": 1
+    }
+]
+```
+
+
+
+
+
+## Authors
+
+- [@BrandonMartinez](https://github.com/brandonblain/ApiTienda)
+
+
